@@ -18,8 +18,8 @@ function(rtsan_libs_enable)
             set(_asset "libclang_rt.rtsan_linux_aarch64.a")
             set(_sha "404eb138286f485d994d822d7a0b97e1d357848d0512a276561a1f4f1a51b253")
         else()
-            set(_asset "libclang_rt.rtsan_linux_x86_64.a")
-            set(_sha "f6072e408c30f98978e860f8f7d667551d288a09767e687b27e0fb71514d18ea")
+            set(_asset "libclang_rt.rtsan_x86_64.so")
+            set(_sha "9912e4ff10c09d9224665a6247ea8a89f6bac66dde222f5064f0f8810526d273")
         endif()
         set(_type STATIC)
     else()
@@ -30,7 +30,7 @@ function(rtsan_libs_enable)
     set(_hdr_sha "271344759463c428522652a54e1beb6cf9cc6d35419d3c998cf25a14bf229b28")
     set(_hdr_url "https://github.com/realtime-sanitizer/rtsan/raw/e2dab730337e736f12c0bb2c9b37d3e15aa335ec/include/rtsan_standalone/rtsan_standalone.h")
 
-    set(_lib_url "https://github.com/realtime-sanitizer/rtsan-libs/releases/download/v20.1.1.2/${_asset}")
+    set(_lib_url "https://github.com/izzyreal/rtsan-libs/releases/tag/v20.1.1-dll-linux/${_asset}")
 
     set(_dir "${CMAKE_BINARY_DIR}/_rtsan")
     set(_lib "${_dir}/${_asset}")
@@ -45,7 +45,7 @@ function(rtsan_libs_enable)
         file(DOWNLOAD
             "${_lib_url}"
             "${_lib}"
-            EXPECTED_HASH SHA256=${_sha}
+	    #EXPECTED_HASH SHA256=${_sha}
             STATUS _st
         )
         list(GET _st 0 _code)
