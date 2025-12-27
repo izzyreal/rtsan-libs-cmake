@@ -64,8 +64,19 @@ Also see https://github.com/realtime-sanitizer/rtsan?tab=readme-ov-file#using-rt
 
 If you've been reading about RTSan and you're wondering where the `[[clang::nonblocking]]` attribute is; the `[[...]]` attributes are **not** used by https://github.com/realtime-sanitizer/rtsan-libs. See https://github.com/realtime-sanitizer/rtsan?tab=readme-ov-file#using-rtsan-standalone-with-compilers-other-than-clang-20 for more info.
 
+## Plugin without standalone wrapper on macOS
+
+On macOS, you can RTSan your VST3 (and presumably LV2 and Audio Unit) plugins directly in a host. You will need to start the host like this:
+
+```
+DYLD_INSERT_LIBRARIES=/absolute/path/to/libclang_rt.rtsan_osx_dynamic.dylib /Applications/REAPER.app/Contents/MacOS/REAPER 
+```
+
+Of course replace the first path to the actual location of the `.dylib` that is reeled in by `rtsan-libs-cmake`. In a typical CMake setup, it will be in `<your_repo_root>/build/_rtsan/libclang_rt.rtsan_osx_dynamic.dylib`.
+
 ## Open issues
 
+* On Linux, debugging a plugin directly (without any kind of standalone executable wrapping) in a host.
 * Parameterize enablement. Currently, RTSan is enabled whenever you do `rtsan_libs_enable(TARGET crazySynth)`. It would be nice to have a flag that can be passed to the CMake generation invocation that would enable or disable `rtsan_libs` inclusion. But this requires a bit more thought about how to keep the code compilable. Some preprocessor guards would probably work, like
 
   ```
